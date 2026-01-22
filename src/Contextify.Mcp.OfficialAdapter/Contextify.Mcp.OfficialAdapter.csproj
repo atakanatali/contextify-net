@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Contextify.Mcp.OfficialAdapter</RootNamespace>
+    <AssemblyName>Contextify.Mcp.OfficialAdapter</AssemblyName>
+    <NoWarn>$(NoWarn);CS8933</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contextify.Core\Contextify.Core.csproj" />
+    <ProjectReference Include="..\Contextify.Abstractions\Contextify.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

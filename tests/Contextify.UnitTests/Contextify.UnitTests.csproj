@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>Contextify.UnitTests</RootNamespace>
+    <AssemblyName>Contextify.UnitTests</AssemblyName>
+    <NoWarn>$(NoWarn);CS8933;CS1998;CS8602</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="YamlDotNet" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Contextify.Core\Contextify.Core.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Transport.Http\Contextify.Transport.Http.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Transport.Stdio\Contextify.Transport.Stdio.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.AspNetCore\Contextify.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.OpenApi\Contextify.OpenApi.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Config.AppSettings\Contextify.Config.AppSettings.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Config.Consul\Contextify.Config.Consul.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Actions.Defaults\Contextify.Actions.Defaults.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Mcp.OfficialAdapter\Contextify.Mcp.OfficialAdapter.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Gateway.Core\Contextify.Gateway.Core.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Gateway.Discovery.Consul\Contextify.Gateway.Discovery.Consul.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Abstractions\Contextify.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

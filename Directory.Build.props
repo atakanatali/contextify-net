@@ -1,0 +1,95 @@
+<Project>
+  <PropertyGroup>
+    <!-- Code Analysis Settings -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <NoWarn>$(NoWarn);CA2007;CS8933</NoWarn>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <!-- Documentation: NO XML docs generated, but non-XML summaries required in code -->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+
+    <!-- Analyzer Settings -->
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Default</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+
+    <!-- Deterministic Builds -->
+    <Deterministic>true</Deterministic>
+
+    <!-- SourceLink: Enables source code linking in NuGet symbol packages for debugging -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- ContinuousIntegrationBuild: Set via CI environment variable (GitHub Actions, Azure DevOps, etc.) -->
+    <!-- This ensures deterministic builds with proper source linking in CI/CD pipelines -->
+    <ContinuousIntegrationBuild Condition="'$(ContinuousIntegrationBuild)' == '' and ('$(CI)' == 'true' or '$(GITHUB_ACTIONS)' == 'true' or '$(TF_BUILD)' == 'true' or '$(JENKINS_HOME)' != '' or '$(GITLAB_CI)' == 'true')">true</ContinuousIntegrationBuild>
+
+    <!-- Implicit Usings -->
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Strict Language Features -->
+    <Features>strict</Features>
+
+    <!-- Versioning: Centralized repo-wide package version management. All projects inherit this version.
+         Use Git tag (vX.Y.Z) in CI/CD to override: dotnet pack /p:Version=${{ github.ref_name without 'v' }} -->
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
+
+    <!-- Packable: Libraries are packable by default, overridden for non-packable projects -->
+    <IsPackable Condition="'$(IsPackable)' == '' and '$(OutputType)' != 'Exe' and '!$(IsTestProject)' != 'true'">true</IsPackable>
+  </PropertyGroup>
+
+  <!-- NuGet Package Metadata (only for packable projects) -->
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <!-- Package Identity -->
+    <PackageId Condition="'$(PackageId)' == ''">$(AssemblyName)</PackageId>
+
+    <!-- Repository Metadata -->
+    <Authors>Contextify Team</Authors>
+    <Company>Contextify</Company>
+    <Product>Contextify</Product>
+    <Copyright>Copyright (c) Contextify</Copyright>
+    <RepositoryUrl>https://github.com/contextify/contextify</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/contextify/contextify</PackageProjectUrl>
+
+    <!-- License and Terms -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+    <!-- Symbol Package -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- README -->
+    <PackageReadmeFile>nuget-readme.md</PackageReadmeFile>
+
+    <!-- Package Icon -->
+    <PackageIcon>icon.png</PackageIcon>
+
+    <!-- Package Tags -->
+    <PackageTags>mcp;model-context-protocol;ai;claude;gpt;aspnetcore;dotnet;tools;resources</PackageTags>
+  </PropertyGroup>
+
+  <!-- Analyzer and Build Reference -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <!-- SourceLink: Enables source code linking in NuGet symbol packages for debugging -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- Package Content (only for packable projects) -->
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <!-- Include README and Icon files in NuGet package -->
+    <None Include="$(MSBuildThisFileDirectory)docs\nuget-readme.md" Pack="true" PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Gateway.Sample</RootNamespace>
+    <AssemblyName>Gateway.Sample</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);CS8933</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Contextify.Gateway.Core\Contextify.Gateway.Core.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.AspNetCore\Contextify.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Transport.Http\Contextify.Transport.Http.csproj" />
+    <ProjectReference Include="..\..\src\Contextify.Config.AppSettings\Contextify.Config.AppSettings.csproj" />
+  </ItemGroup>
+
+</Project>

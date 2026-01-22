@@ -1,0 +1,64 @@
+## [Visual Studio]
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (DotSettings)
+*.csproj.DotSettings.user
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bbin/
+obj/
+external/
+[Bb]in/
+[Oo]bj/
+generated/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/lib/
+
+# Visual Studio Code
+.vscode/
+.history/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iws
+
+## [Core]
+# Publish output
+[Pp]ublish/
+
+# Logs
+*.log
+build_errors*.txt
+
+# Local settings
+appsettings.local.json
+
+# Backup & Temp
+*.bak
+*~
+*.tmp
+
+# User-specific tools
+.tools/
+
+# OS specific files
+.DS_Store
+Thumbs.db
