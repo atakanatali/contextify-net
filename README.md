@@ -1,7 +1,7 @@
 # Contextify
 
 <p align="center">
-  <img width="256" height="256" alt="Contextify Logo" src="./icon.png" />
+  <img width="456" height="456" alt="Cachify Logo" src="https://github.com/user-attachments/assets/d7c6306b-cf1b-45c1-a58f-492bb3ec304a" />
 </p>
 
 <p align="center">
