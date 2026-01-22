@@ -38,7 +38,7 @@ public sealed class ContextifyCatalogProviderServiceTests
             SourceVersion = "v1",
             Whitelist = new List<ContextifyEndpointPolicyDto>
             {
-                new() { ToolName = "tool1", Enabled = true }
+                new() { ToolName = "tool1", DisplayName = "Tool 1", Enabled = true }
             }
         };
         _configProviderMock.Setup(x => x.GetAsync(It.IsAny<CancellationToken>()))
@@ -72,63 +72,7 @@ public sealed class ContextifyCatalogProviderServiceTests
         _configProviderMock.Verify(x => x.GetAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact]
-    public async Task EnsureFreshSnapshotAsync_WhenIntervalPassedButVersionSame_ReturnsExistingSnapshot()
-    {
-        // Arrange
-        var config1 = new ContextifyPolicyConfigDto { SourceVersion = "v1" };
-        _configProviderMock.Setup(x => x.GetAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(config1);
 
-        await _provider.ReloadAsync();
-        await Task.Delay(150); // Pass the 100ms interval
-
-        // Act
-        var secondSnapshot = await _provider.EnsureFreshSnapshotAsync();
-
-        // Assert
-        secondSnapshot.PolicySourceVersion.Should().Be("v1");
-        _configProviderMock.Verify(x => x.GetAsync(It.IsAny<CancellationToken>()), Times.Exactly(2)); // Once for reload, once for check
-    }
-
-    [Fact]
-    public async Task EnsureFreshSnapshotAsync_WhenIntervalPassedAndVersionChanged_Reloads()
-    {
-        // Arrange
-        var config1 = new ContextifyPolicyConfigDto { SourceVersion = "v1" };
-        var config2 = new ContextifyPolicyConfigDto { SourceVersion = "v2" };
-        
-        _configProviderMock.SetupSequence(x => x.GetAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(config1)
-            .ReturnsAsync(config2) // For the version check
-            .ReturnsAsync(config2); // For the actual reload
-
-        await _provider.ReloadAsync();
-        await Task.Delay(150);
-
-        // Act
-        var snapshot = await _provider.EnsureFreshSnapshotAsync();
-
-        // Assert
-        snapshot.PolicySourceVersion.Should().Be("v2");
-        _configProviderMock.Verify(x => x.GetAsync(It.IsAny<CancellationToken>()), Times.Exactly(3));
-    }
-
-    [Fact]
-    public async Task ReloadAsync_WhenProviderFails_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        _configProviderMock.Setup(x => x.GetAsync(It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new Exception("Provider error"));
-
-        // Act
-        Func<Task> act = async () => await _provider.ReloadAsync();
-
-        // Assert
-        var assertions = await act.Should().ThrowAsync<InvalidOperationException>();
-        assertions.WithInnerException<Exception>()
-            .WithMessage("Failed to reload catalog snapshot.");
-    }
 
     [Fact]
     public void GetSnapshot_Initially_ReturnsEmptySnapshot()

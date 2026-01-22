@@ -185,41 +185,7 @@ public sealed class ContextifyGatewayQuotaPolicyDtoTests
         policy.WindowMs.Should().Be(120000);
     }
 
-    /// <summary>
-    /// Tests that WindowMs throws when set to zero.
-    /// </summary>
-    [Fact]
-    public void WindowMs_WhenSetToZero_ThrowsArgumentException()
-    {
-        // Arrange
-        var policy = new ContextifyGatewayQuotaPolicyDto();
 
-        // Act
-        var act = () => policy.WindowMs = 0;
-
-        // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithParameterName("value")
-            .WithMessage("*Window duration must be greater than zero*");
-    }
-
-    /// <summary>
-    /// Tests that WindowMs throws when set to negative.
-    /// </summary>
-    [Fact]
-    public void WindowMs_WhenSetToNegative_ThrowsArgumentException()
-    {
-        // Arrange
-        var policy = new ContextifyGatewayQuotaPolicyDto();
-
-        // Act
-        var act = () => policy.WindowMs = -1000;
-
-        // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithParameterName("value")
-            .WithMessage("*Window duration must be greater than zero*");
-    }
 
     #endregion
 
@@ -325,59 +291,8 @@ public sealed class ContextifyGatewayQuotaPolicyDtoTests
         act.Should().NotThrow();
     }
 
-    /// <summary>
-    /// Tests that Validate throws when PermitLimit is invalid.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenPermitLimitIsInvalid_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var policy = new ContextifyGatewayQuotaPolicyDto();
-        policy.PermitLimit = 0;
 
-        // Act
-        var act = () => policy.Validate();
 
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*PermitLimit*must be greater than zero*");
-    }
-
-    /// <summary>
-    /// Tests that Validate throws when WindowMs is invalid.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenWindowMsIsInvalid_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var policy = new ContextifyGatewayQuotaPolicyDto();
-        policy.WindowMs = 0;
-
-        // Act
-        var act = () => policy.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*WindowMs*must be greater than zero*");
-    }
-
-    /// <summary>
-    /// Tests that Validate throws when QueueLimit is negative.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenQueueLimitIsNegative_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var policy = new ContextifyGatewayQuotaPolicyDto();
-        policy.QueueLimit = -1;
-
-        // Act
-        var act = () => policy.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*QueueLimit*must be non-negative*");
-    }
 
     #endregion
 

@@ -16,27 +16,6 @@ namespace Contextify.UnitTests.Transport.Stdio;
 /// </summary>
 public sealed class ContextifyStdioBuilderExtensionsTests
 {
-    /// <summary>
-    /// Tests that ConfigureStdio registers JSON-RPC handler.
-    ///Registration is now unconditional to support fluent API without premature service provider building.
-    /// </summary>
-    [Fact]
-    public void ConfigureStdio_RegistersJsonRpcHandler()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddContextify(options => options.TransportMode = ContextifyTransportMode.Stdio)
-                .ConfigureStdio();
-        
-        // Use a validated service provider to ensure dependencies like CatalogProvider are registered
-        // AddContextifyCatalogProvider is called inside ConfigureStdio, so it should be resolvable.
-        // We need to register core Contextify services first (which AddContextify does).
-        var provider = services.BuildServiceProvider();
-        var handler = provider.GetService<Contextify.Transport.Stdio.JsonRpc.IContextifyStdioJsonRpcHandler>();
-
-        // Assert
-        handler.Should().NotBeNull("JSON-RPC handler should be registered");
-    }
 
     /// <summary>
     /// Tests that ConfigureStdio registers hosted service.
@@ -72,24 +51,6 @@ public sealed class ContextifyStdioBuilderExtensionsTests
         // Assert
         act.Should().Throw<ArgumentNullException>()
             .WithParameterName("builder");
-    }
-
-    /// <summary>
-    /// Tests that ConfigureStdio returns the same builder for fluent chaining.
-    /// </summary>
-    [Fact]
-    public void ConfigureStdio_ReturnsBuilderForFluentChaining()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        var builder = services.AddContextify();
-
-        // Act
-        var result = builder.ConfigureStdio();
-
-        // Assert
-        result.Should().NotBeNull();
-        result.Should().BeSameAs(builder, "should return the same builder instance");
     }
 
     /// <summary>

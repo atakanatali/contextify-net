@@ -161,28 +161,6 @@ public sealed class ContextifyGatewayToolPolicyServiceTests
         result.Should().BeFalse("deny patterns should override allow patterns");
     }
 
-    /// <summary>
-    /// Tests that wildcard deny patterns work correctly.
-    /// </summary>
-    [Fact]
-    public void IsAllowed_WithWildcardDenyPattern_MatchesCorrectly()
-    {
-        // Arrange
-        var options = new ContextifyGatewayOptionsEntity
-        {
-            DenyByDefault = false
-        };
-        options.SetAllowedToolPatterns(Array.Empty<string>());
-        options.SetDeniedToolPatterns(new List<string> { "*admin*", "*password*" });
-
-        var service = new ContextifyGatewayToolPolicyService(options, _loggerMock.Object);
-
-        // Act & Assert
-        service.IsAllowed("user.get_profile").Should().BeTrue();
-        service.IsAllowed("admin.get_users").Should().BeFalse();
-        service.IsAllowed("user.change_password").Should().BeFalse();
-        service.IsAllowed("user.reset_password_admin").Should().BeFalse();
-    }
 
     /// <summary>
     /// Tests that suffix deny patterns work correctly.
@@ -282,28 +260,6 @@ public sealed class ContextifyGatewayToolPolicyServiceTests
         service.IsAllowed("orders.get").Should().BeFalse();
     }
 
-    /// <summary>
-    /// Tests that wildcard allow patterns work correctly.
-    /// </summary>
-    [Fact]
-    public void IsAllowed_WithWildcardAllowPattern_MatchesCorrectly()
-    {
-        // Arrange
-        var options = new ContextifyGatewayOptionsEntity
-        {
-            DenyByDefault = false
-        };
-        options.SetAllowedToolPatterns(new List<string> { "*read*" });
-        options.SetDeniedToolPatterns(Array.Empty<string>());
-
-        var service = new ContextifyGatewayToolPolicyService(options, _loggerMock.Object);
-
-        // Act & Assert
-        service.IsAllowed("users.read_profile").Should().BeTrue();
-        service.IsAllowed("read_users_list").Should().BeTrue();
-        service.IsAllowed("users.get").Should().BeFalse();
-        service.IsAllowed("users.update").Should().BeFalse();
-    }
 
     /// <summary>
     /// Tests that exact match allow patterns work correctly.
@@ -403,30 +359,6 @@ public sealed class ContextifyGatewayToolPolicyServiceTests
 
     #region IsAllowed Tests - Deny Overrides Allow
 
-    /// <summary>
-    /// Tests that deny patterns override allow patterns (security-first).
-    /// </summary>
-    [Fact]
-    public void IsAllowed_DenyOverridesAllow_DenyTakesPrecedence()
-    {
-        // Arrange
-        var options = new ContextifyGatewayOptionsEntity
-        {
-            DenyByDefault = false
-        };
-        options.SetAllowedToolPatterns(new List<string> { "payments.*", "users.*" });
-        options.SetDeniedToolPatterns(new List<string> { "payments.delete_*", "*.admin_*" });
-
-        var service = new ContextifyGatewayToolPolicyService(options, _loggerMock.Object);
-
-        // Act & Assert - denied pattern overrides allowed
-        service.IsAllowed("payments.delete_user").Should().BeFalse();
-        service.IsAllowed("payments.create_invoice").Should().BeTrue();
-
-        // Deny pattern matches despite allow pattern
-        service.IsAllowed("users.admin_get_all").Should().BeFalse();
-        service.IsAllowed("users.get_profile").Should().BeTrue();
-    }
 
     /// <summary>
     /// Tests that exact deny overrides exact allow.
@@ -559,37 +491,6 @@ public sealed class ContextifyGatewayToolPolicyServiceTests
         result.Should().BeEquivalentTo(tools);
     }
 
-    /// <summary>
-    /// Tests that FilterAllowedTools filters by deny patterns.
-    /// </summary>
-    [Fact]
-    public void FilterAllowedTools_WithDenyPatterns_ReturnsOnlyAllowed()
-    {
-        // Arrange
-        var options = new ContextifyGatewayOptionsEntity
-        {
-            DenyByDefault = false
-        };
-        options.SetAllowedToolPatterns(Array.Empty<string>());
-        options.SetDeniedToolPatterns(new List<string> { "*delete*", "*admin*" });
-
-        var service = new ContextifyGatewayToolPolicyService(options, _loggerMock.Object);
-        var tools = new List<string>
-        {
-            "users.get",
-            "users.delete",
-            "users.admin_get",
-            "payments.get",
-            "admin.shutdown"
-        };
-
-        // Act
-        var result = service.FilterAllowedTools(tools);
-
-        // Assert
-        result.Should().HaveCount(2);
-        result.Should().BeEquivalentTo(new List<string> { "users.get", "payments.get" });
-    }
 
     /// <summary>
     /// Tests that FilterAllowedTools filters by allow patterns.

@@ -75,6 +75,7 @@ public sealed class ContextifyCatalogBuilderServiceTests
                 new()
                 {
                     ToolName = "enabled_tool",
+                    DisplayName = "Enabled Tool",
                     Enabled = true
                 },
                 new()
@@ -110,6 +111,7 @@ public sealed class ContextifyCatalogBuilderServiceTests
                 new()
                 {
                     ToolName = "valid_tool",
+                    DisplayName = "Valid Tool",
                     Enabled = true
                 }
             }
@@ -166,6 +168,7 @@ public sealed class ContextifyCatalogBuilderServiceTests
                 new()
                 {
                     ToolName = "sync_tool",
+                    DisplayName = "Sync Tool",
                     Enabled = true
                 }
             }

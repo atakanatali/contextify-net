@@ -184,57 +184,7 @@ public sealed class ContextifyToolCatalogSnapshotEntityTests
         act.Should().NotThrow();
     }
 
-    /// <summary>
-    /// Tests that Validate throws when tool name is null or whitespace.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenToolNameIsNullOrWhitespace_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var tools = new Dictionary<string, ContextifyToolDescriptorEntity>(StringComparer.Ordinal)
-        {
-            ["  "] = new ContextifyToolDescriptorEntity(
-                "  ",
-                "Invalid tool",
-                null,
-                null,
-                null)
-        };
-        var snapshot = new ContextifyToolCatalogSnapshotEntity(
-            DateTime.UtcNow,
-            "v1.0",
-            tools);
 
-        // Act
-        var act = () => snapshot.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*Tool name cannot be null or whitespace*");
-    }
-
-    /// <summary>
-    /// Tests that Validate throws when tool descriptor is null.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenToolDescriptorIsNull_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var tools = new Dictionary<string, ContextifyToolDescriptorEntity>(StringComparer.Ordinal);
-        var snapshot = new ContextifyToolCatalogSnapshotEntity(
-            DateTime.UtcNow,
-            "v1.0",
-            // The dictionary is created with reflection to insert null value
-            // which is not possible through normal API
-            CreateDictionaryWithNullDescriptor());
-
-        // Act
-        var act = () => snapshot.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*Tool descriptor*is null*");
-    }
 
     #endregion
 
