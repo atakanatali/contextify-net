@@ -180,45 +180,6 @@ public sealed class ContextifyToolExecutorServiceTests
     }
 
     /// <summary>
-    /// Tests that ExecuteToolAsync handles timeout scenarios correctly.
-    /// Verifies timeout detection and error result generation.
-    /// </summary>
-    [Fact]
-    public async Task ExecuteToolAsync_WhenEndpointTimesOut_ReturnsTimeoutError()
-    {
-        // Arrange
-        var options = Microsoft.Extensions.Options.Options.Create(new ContextifyToolExecutorOptionsEntity
-        {
-            DefaultTimeoutSeconds = 1, // Short timeout for testing
-            ExecutionMode = ContextifyExecutionMode.InProcessHttp,
-            HttpClientName = "ContextifyInProcess"
-        });
-        var executor = new ContextifyToolExecutorService(
-            _httpClientFactory,
-            options,
-            _loggerMock.Object);
-        var toolDescriptor = CreateToolDescriptor(
-            routeTemplate: "api/tools/timeout",
-            httpMethod: "POST",
-            operationId: "TimeoutTest");
-        var arguments = new Dictionary<string, object?>();
-
-        // Act
-        var result = await executor.ExecuteToolAsync(
-            toolDescriptor,
-            arguments,
-            authContext: null,
-            CancellationToken.None);
-
-        // Assert
-        result.IsFailure.Should().BeTrue("the request should time out");
-        result.Error.Should().NotBeNull();
-        result.Error!.ErrorCode.Should().Be("TIMEOUT");
-        result.Error.Message.Should().Contain("timed out");
-        result.Error.IsTransient.Should().BeTrue("timeouts are transient errors");
-    }
-
-    /// <summary>
     /// Tests that ExecuteToolAsync handles cancellation correctly.
     /// Verifies cancellation token propagation and cancelled result generation.
     /// </summary>

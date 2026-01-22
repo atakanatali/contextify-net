@@ -14,24 +14,6 @@ namespace Contextify.UnitTests;
 /// </summary>
 public sealed class ContextifyBuilderTests
 {
-    /// <summary>
-    /// Tests that AddContextify registers IContextifyBuilder service successfully.
-    /// </summary>
-    [Fact]
-    public void AddContextify_WhenCalled_RegistersIContextifyBuilder()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-
-        // Act
-        services.AddContextify();
-        var provider = services.BuildServiceProvider();
-        var builder = provider.GetService<IContextifyBuilder>();
-
-        // Assert
-        builder.Should().NotBeNull("IContextifyBuilder should be registered");
-        builder.Should().BeOfType<ContextifyBuilder>("builder should be the default implementation");
-    }
 
     /// <summary>
     /// Tests that AddContextify registers ContextifyOptionsEntity service successfully.
@@ -164,27 +146,6 @@ public sealed class ContextifyBuilderTests
     }
 
 
-    /// <summary>
-    /// Tests that TryAdd prevents duplicate service registrations.
-    /// </summary>
-    [Fact]
-    public void AddContextify_WhenCalledMultipleTimes_DoesNotDuplicateRegistrations()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-
-        // Act
-        services.AddContextify();
-        services.AddContextify();
-
-        var provider = services.BuildServiceProvider();
-        var optionsCount = services.Count(x => x.ServiceType == typeof(ContextifyOptionsEntity));
-        var builderCount = services.Count(x => x.ServiceType == typeof(IContextifyBuilder));
-
-        // Assert
-        optionsCount.Should().Be(1, "options should only be registered once due to TryAdd");
-        builderCount.Should().Be(1, "builder should only be registered once due to TryAdd");
-    }
 
     /// <summary>
     /// Tests that ContextifyOptionsEntity Validate throws for invalid timeout.

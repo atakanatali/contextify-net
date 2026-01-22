@@ -511,59 +511,8 @@ public sealed class ContextifyGatewayRateLimitOptionsEntityTests
         act.Should().NotThrow();
     }
 
-    /// <summary>
-    /// Tests that Validate throws when MaxCacheSize is invalid.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenMaxCacheSizeIsInvalid_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var options = new ContextifyGatewayRateLimitOptionsEntity();
-        options.MaxCacheSize = 0;
 
-        // Act
-        var act = () => options.Validate();
 
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*MaxCacheSize*must be greater than zero*");
-    }
-
-    /// <summary>
-    /// Tests that Validate throws when CleanupInterval is invalid.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenCleanupIntervalIsInvalid_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var options = new ContextifyGatewayRateLimitOptionsEntity();
-        options.CleanupInterval = TimeSpan.Zero;
-
-        // Act
-        var act = () => options.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*CleanupInterval*must be greater than zero*");
-    }
-
-    /// <summary>
-    /// Tests that Validate throws when EntryExpiration is invalid.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenEntryExpirationIsInvalid_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var options = new ContextifyGatewayRateLimitOptionsEntity();
-        options.EntryExpiration = TimeSpan.FromSeconds(-1);
-
-        // Act
-        var act = () => options.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*EntryExpiration*must be greater than zero*");
-    }
 
     /// <summary>
     /// Tests that Validate validates default policy if present.

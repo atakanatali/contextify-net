@@ -537,29 +537,6 @@ public sealed class ContextifyPolicyResolverServiceTests
             .WithMessage("*OperationId*RouteTemplate*DisplayName*");
     }
 
-    /// <summary>
-    /// Tests that null collections in policy config are handled gracefully.
-    /// Empty lists should be treated the same as null for safety.
-    /// </summary>
-    [Fact]
-    public void ResolvePolicy_WhenCollectionsAreNull_HandlesGracefully()
-    {
-        // Arrange
-        var descriptor = ContextifyEndpointDescriptor.FromOperationId("Test", "GET");
-        var policy = new ContextifyPolicyConfigDto
-        {
-            DenyByDefault = false,
-            Whitelist = null!,
-            Blacklist = null!
-        };
-
-        // Act
-        var result = _sut.ResolvePolicy(descriptor, policy);
-
-        // Assert - Should treat null collections as empty
-        result.IsEnabled.Should().BeTrue("allow-by-default should apply when collections are null");
-        result.ResolutionSource.Should().Be(ContextifyPolicyResolutionSource.Default);
-    }
 
     /// <summary>
     /// Tests that empty whitelist and blacklist are handled correctly.

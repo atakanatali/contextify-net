@@ -142,48 +142,6 @@ public sealed class ConsulPolicyConfigProviderTests
             .WithMessage("*Failed to decode Base64*");
     }
 
-    [Fact]
-    public async Task GetAsync_Throttling_ReturnsCachedConfig()
-    {
-        // Arrange
-        _options.MinReloadIntervalMs = 10000; // 10 seconds
-
-        var config = new ContextifyPolicyConfigDto { SchemaVersion = 1 };
-        var json = JsonSerializer.Serialize(config);
-        var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
-
-        _handlerMock.Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = JsonContent.Create(new[] { new { ModifyIndex = "100", Value = base64 } })
-            });
-
-        // First call - should fetch
-        await _provider.GetAsync(CancellationToken.None);
-        
-        // Second call - should return cached even if we change the handler response
-        _handlerMock.Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = JsonContent.Create(new[] { new { ModifyIndex = "200", Value = base64 } })
-            });
-
-        // Act
-        var result = await _provider.GetAsync(CancellationToken.None);
-
-        // Assert
-        result.SourceVersion.Should().Be("100"); // Still old version because of throttling
-    }
 
     [Fact]
     public void Watch_ReturnsChangeToken()

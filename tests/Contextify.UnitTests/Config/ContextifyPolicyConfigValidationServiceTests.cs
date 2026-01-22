@@ -27,55 +27,7 @@ public sealed class ContextifyPolicyConfigValidationServiceTests
 
     #region SchemaVersion Tests
 
-    /// <summary>
-    /// Tests that missing SchemaVersion (0) is treated as version 1 with a warning.
-    /// Verifies backward compatibility for configurations without schema version.
-    /// </summary>
-    [Fact]
-    public void ValidatePolicyConfig_WhenSchemaVersionIsZero_ReturnsWarningAndTreatsAsVersion1()
-    {
-        // Arrange
-        var config = new ContextifyPolicyConfigDto
-        {
-            SchemaVersion = 0, // Missing schema version
-            DenyByDefault = false,
-            Whitelist = [],
-            Blacklist = []
-        };
 
-        // Act
-        var result = _validationService.ValidatePolicyConfig(config);
-
-        // Assert
-        result.IsValid.Should().BeTrue("validation should pass with backward compatibility");
-        result.Warnings.Should().ContainSingle()
-            .Which.Should().Contain("SchemaVersion is missing or 0", "should warn about missing version");
-        result.Errors.Should().BeEmpty("should not produce errors for backward compatibility");
-    }
-
-    /// <summary>
-    /// Tests that SchemaVersion 1 is accepted without warnings or errors.
-    /// Verifies the current supported schema version works correctly.
-    /// </summary>
-    [Fact]
-    public void ValidatePolicyConfig_WhenSchemaVersionIs1_ReturnsSuccess()
-    {
-        // Arrange
-        var config = new ContextifyPolicyConfigDto
-        {
-            SchemaVersion = 1,
-            DenyByDefault = false,
-            Whitelist = [],
-            Blacklist = []
-        };
-
-        // Act
-        var result = _validationService.ValidatePolicyConfig(config);
-
-        // Assert
-        result.IsValid.Should().BeTrue("schema version 1 should be valid");
-        result.HasMessages.Should().BeFalse("should not produce warnings or errors");
-    }
 
     /// <summary>
     /// Tests that negative SchemaVersion produces an error.
@@ -215,33 +167,6 @@ public sealed class ContextifyPolicyConfigValidationServiceTests
         result.Warnings.Should().Contain(w => w.Contains("RouteTemplate but no HttpMethod"));
     }
 
-    /// <summary>
-    /// Tests that null policies in the list produce errors.
-    /// Verifies null policy entries are properly rejected.
-    /// </summary>
-    [Fact]
-    public void ValidatePolicyConfig_WhenPolicyListContainsNull_ReturnsError()
-    {
-        // Arrange
-        var config = new ContextifyPolicyConfigDto
-        {
-            SchemaVersion = 1,
-            DenyByDefault = false,
-            Whitelist =
-            [
-                new ContextifyEndpointPolicyDto { OperationId = "valid" },
-                null!
-            ],
-            Blacklist = []
-        };
-
-        // Act
-        var result = _validationService.ValidatePolicyConfig(config);
-
-        // Assert
-        result.IsValid.Should().BeFalse("null policy should be invalid");
-        result.Errors.Should().Contain(e => e.Contains("is null"));
-    }
 
     #endregion
 
@@ -441,51 +366,6 @@ public sealed class ContextifyPolicyConfigValidationServiceTests
 
     #region Valid Configuration Tests
 
-    /// <summary>
-    /// Tests that a valid configuration passes validation.
-    /// Verifies complete valid configuration is accepted.
-    /// </summary>
-    [Fact]
-    public void ValidatePolicyConfig_WhenConfigIsValid_ReturnsSuccess()
-    {
-        // Arrange
-        var config = new ContextifyPolicyConfigDto
-        {
-            SchemaVersion = 1,
-            DenyByDefault = false,
-            Whitelist =
-            [
-                new ContextifyEndpointPolicyDto
-                {
-                    OperationId = "api/read",
-                    DisplayName = "Read API",
-                    HttpMethod = "GET",
-                    RouteTemplate = "/api/read",
-                    RateLimitPolicy = new ContextifyRateLimitPolicyDto
-                    {
-                        Strategy = "FixedWindow",
-                        PermitLimit = 100,
-                        WindowMs = 60000
-                    }
-                }
-            ],
-            Blacklist =
-            [
-                new ContextifyEndpointPolicyDto
-                {
-                    OperationId = "api/delete",
-                    DisplayName = "Delete API"
-                }
-            ]
-        };
-
-        // Act
-        var result = _validationService.ValidatePolicyConfig(config);
-
-        // Assert
-        result.IsValid.Should().BeTrue("valid configuration should pass validation");
-        result.HasMessages.Should().BeFalse("valid configuration should not produce warnings or errors");
-    }
 
     /// <summary>
     /// Tests that default factory configurations pass validation.

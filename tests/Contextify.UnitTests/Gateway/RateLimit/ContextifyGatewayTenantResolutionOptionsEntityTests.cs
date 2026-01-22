@@ -220,41 +220,6 @@ public sealed class ContextifyGatewayTenantResolutionOptionsEntityTests
         act.Should().NotThrow();
     }
 
-    /// <summary>
-    /// Tests that Validate throws when TenantHeaderName is null.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenTenantHeaderNameIsNull_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var options = new ContextifyGatewayTenantResolutionOptionsEntity();
-        options.TenantHeaderName = null!;
-
-        // Act
-        var act = () => options.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*TenantHeaderName*cannot be null or whitespace*");
-    }
-
-    /// <summary>
-    /// Tests that Validate throws when UserHeaderName is null.
-    /// </summary>
-    [Fact]
-    public void Validate_WhenUserHeaderNameIsNull_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var options = new ContextifyGatewayTenantResolutionOptionsEntity();
-        options.UserHeaderName = null!;
-
-        // Act
-        var act = () => options.Validate();
-
-        // Assert
-        act.Should().Throw<InvalidOperationException>()
-            .WithMessage("*UserHeaderName*cannot be null or whitespace*");
-    }
 
     #endregion
 

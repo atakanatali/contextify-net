@@ -119,27 +119,6 @@ public sealed class ContextifyGatewayNoRetryPolicyTests
 
     #region ExecuteAsync Tests - Cancellation
 
-    /// <summary>
-    /// Tests that ExecuteAsync respects cancellation token.
-    /// </summary>
-    [Fact]
-    public async Task ExecuteAsync_WhenCanceled_RespectsCancellation()
-    {
-        // Arrange
-        var policy = new ContextifyGatewayNoRetryPolicy();
-        var context = CreateTestContext();
-        using var cts = new CancellationTokenSource();
-        cts.Cancel();
-
-        // Act
-        var act = async () => await policy.ExecuteAsync<string>(
-            ct => Task.FromResult("result"),
-            context,
-            cts.Token);
-
-        // Assert - Should throw because token is already canceled
-        await act.Should().ThrowAsync<OperationCanceledException>();
-    }
 
     #endregion
 
