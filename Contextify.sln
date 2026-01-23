@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Sample", "samples\G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consul.Sample", "samples\Consul.Sample\Consul.Sample.csproj", "{02676345-7AF4-4974-AEA4-3A4D7D1E78C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contextify.Gateway.Discovery.Consul", "src\Contextify.Gateway.Discovery.Consul\Contextify.Gateway.Discovery.Consul.csproj", "{30ADE2DE-E4EC-4C06-A0D8-DE93CF3F07FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{02676345-7AF4-4974-AEA4-3A4D7D1E78C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02676345-7AF4-4974-AEA4-3A4D7D1E78C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02676345-7AF4-4974-AEA4-3A4D7D1E78C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ADE2DE-E4EC-4C06-A0D8-DE93CF3F07FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ADE2DE-E4EC-4C06-A0D8-DE93CF3F07FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ADE2DE-E4EC-4C06-A0D8-DE93CF3F07FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ADE2DE-E4EC-4C06-A0D8-DE93CF3F07FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A1B2C3D4-E5F6-4A5B-8C9D-1E2F3A4B5C6D} = {8B5F3E1A-7C9D-4A3E-8F2B-1D3C5E7F9A1B}
@@ -159,5 +165,6 @@ Global
 		{8E8B5D65-0BD2-4387-8585-9ACCFCC499E3} = {0D7G5G3C-9E1F-5C6G-0H4D-3F5E7G9B1C3D}
 		{524521DF-AA6F-44D1-A96F-46FFF3ECFD0E} = {0D7G5G3C-9E1F-5C6G-0H4D-3F5E7G9B1C3D}
 		{02676345-7AF4-4974-AEA4-3A4D7D1E78C3} = {0D7G5G3C-9E1F-5C6G-0H4D-3F5E7G9B1C3D}
+		{30ADE2DE-E4EC-4C06-A0D8-DE93CF3F07FE} = {8B5F3E1A-7C9D-4A3E-8F2B-1D3C5E7F9A1B}
 	EndGlobalSection
 EndGlobal

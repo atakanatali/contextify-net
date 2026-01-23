@@ -37,8 +37,9 @@
     <VersionPrefix>0.1.0</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
 
-    <!-- Packable: Libraries are packable by default, overridden for non-packable projects -->
-    <IsPackable Condition="'$(IsPackable)' == '' and '$(OutputType)' != 'Exe' and '!$(IsTestProject)' != 'true'">true</IsPackable>
+    <!-- Packable: Only projects in the src directory are packable. Tests and samples are explicitly excluded. -->
+    <IsPackable Condition="'$(IsPackable)' == ''">false</IsPackable>
+    <IsPackable Condition="'$(MSBuildProjectDirectory.Contains(&quot;$(MSBuildThisFileDirectory)src&quot;))' == 'true' and '$(OutputType)' != 'Exe'">true</IsPackable>
   </PropertyGroup>
 
   <!-- NuGet Package Metadata (only for packable projects) -->

@@ -21,7 +21,28 @@ dotnet add package Contextify.Transport.Stdio
 ### For Gateway (Multi-Backend Aggregation)
 
 ```bash
-dotnet add package Contextify.Gateway.Host
+dotnet add package Contextify.Gateway.Core
+dotnet add package Contextify.Gateway.Discovery.Consul
+```
+
+### Official MCP SDK Support
+
+```bash
+dotnet add package Contextify.Mcp.OfficialAdapter
+```
+
+### Configuration Providers
+
+```bash
+dotnet add package Contextify.Config.AppSettings
+dotnet add package Contextify.Config.Consul
+```
+
+### Additional Features
+
+```bash
+dotnet add package Contextify.OpenApi
+dotnet add package Contextify.Actions.Defaults
 ```
 
 ## Quick Start

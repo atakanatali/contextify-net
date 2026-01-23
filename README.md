@@ -73,6 +73,12 @@ graph TB
 | `Contextify.Transport.Http` | HTTP transport for MCP | [![NuGet](https://img.shields.io/nuget/v/Contextify.Transport.Http)](https://www.nuget.org/packages/Contextify.Transport.Http) |
 | `Contextify.Transport.Stdio` | STDIO transport for MCP | [![NuGet](https://img.shields.io/nuget/v/Contextify.Transport.Stdio)](https://www.nuget.org/packages/Contextify.Transport.Stdio) |
 | `Contextify.OpenApi` | OpenAPI to MCP conversion | [![NuGet](https://img.shields.io/nuget/v/Contextify.OpenApi)](https://www.nuget.org/packages/Contextify.OpenApi) |
+| `Contextify.Config.AppSettings` | appsettings.json policy provider | [![NuGet](https://img.shields.io/nuget/v/Contextify.Config.AppSettings)](https://www.nuget.org/packages/Contextify.Config.AppSettings) |
+| `Contextify.Config.Consul` | Consul-based policy provider | [![NuGet](https://img.shields.io/nuget/v/Contextify.Config.Consul)](https://www.nuget.org/packages/Contextify.Config.Consul) |
+| `Contextify.Actions.Defaults` | Pre-built system actions | [![NuGet](https://img.shields.io/nuget/v/Contextify.Actions.Defaults)](https://www.nuget.org/packages/Contextify.Actions.Defaults) |
+| `Contextify.Mcp.OfficialAdapter` | Official MCP SDK adapter | [![NuGet](https://img.shields.io/nuget/v/Contextify.Mcp.OfficialAdapter)](https://www.nuget.org/packages/Contextify.Mcp.OfficialAdapter) |
+| `Contextify.Gateway.Core` | Centralized gateway aggregation | [![NuGet](https://img.shields.io/nuget/v/Contextify.Gateway.Core)](https://www.nuget.org/packages/Contextify.Gateway.Core) |
+| `Contextify.Gateway.Discovery.Consul` | Consul discovery for Gateway | [![NuGet](https://img.shields.io/nuget/v/Contextify.Gateway.Discovery.Consul)](https://www.nuget.org/packages/Contextify.Gateway.Discovery.Consul) |
 
 ---
 
