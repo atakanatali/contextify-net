@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.AspNetCore</RootNamespace>
     <AssemblyName>Contextify.AspNetCore</AssemblyName>
+    <Description>ASP.NET Core integration for hosting MCP servers.</Description>
   </PropertyGroup>
 
   <ItemGroup>

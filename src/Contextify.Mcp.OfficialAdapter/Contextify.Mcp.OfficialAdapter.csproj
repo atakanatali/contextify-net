@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Mcp.OfficialAdapter</RootNamespace>
     <AssemblyName>Contextify.Mcp.OfficialAdapter</AssemblyName>
+    <Description>Adapter for the official Anthropic ModelContextProtocol SDK.</Description>
     <NoWarn>$(NoWarn);CS8933;NU5104</NoWarn>
   </PropertyGroup>
 

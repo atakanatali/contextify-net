@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Gateway.Discovery.Consul</RootNamespace>
     <AssemblyName>Contextify.Gateway.Discovery.Consul</AssemblyName>
+    <Description>Consul-based service discovery for Contextify Gateway.</Description>
   </PropertyGroup>
 
   <ItemGroup>

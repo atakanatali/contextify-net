@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Config.AppSettings</RootNamespace>
     <AssemblyName>Contextify.Config.AppSettings</AssemblyName>
+    <Description>AppSettings-based policy and configuration provider.</Description>
   </PropertyGroup>
 
   <ItemGroup>

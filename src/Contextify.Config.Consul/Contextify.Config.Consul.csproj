@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Config.Consul</RootNamespace>
     <AssemblyName>Contextify.Config.Consul</AssemblyName>
+    <Description>Consul-based dynamic policy and configuration provider.</Description>
   </PropertyGroup>
 
   <ItemGroup>

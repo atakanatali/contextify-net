@@ -24,6 +24,7 @@
   <a href="https://github.com/atakanatali/contextify-net/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/atakanatali/contextify-net" alt="License" />
   </a>
+  <img src="https://img.shields.io/badge/Tests-675%20passed-64b5f6" alt="Tests" />
 </p>
 
 ---

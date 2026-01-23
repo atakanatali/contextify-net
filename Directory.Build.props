@@ -48,9 +48,10 @@
     <PackageId Condition="'$(PackageId)' == ''">$(AssemblyName)</PackageId>
 
     <!-- Repository Metadata -->
-    <Authors>Contextify Team</Authors>
+    <Authors>Atakan ATALI</Authors>
     <Company>Contextify</Company>
     <Product>Contextify</Product>
+    <Description>A modular, enterprise-grade .NET framework for Model Context Protocol (MCP) servers.</Description>
     <Copyright>Copyright (c) Contextify</Copyright>
     <RepositoryUrl>https://github.com/atakanatali/contextify-net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
