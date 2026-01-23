@@ -52,9 +52,9 @@
     <Company>Contextify</Company>
     <Product>Contextify</Product>
     <Copyright>Copyright (c) Contextify</Copyright>
-    <RepositoryUrl>https://github.com/contextify/contextify</RepositoryUrl>
+    <RepositoryUrl>https://github.com/atakanatali/contextify-net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/contextify/contextify</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/atakanatali/contextify-net</PackageProjectUrl>
 
     <!-- License and Terms -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
