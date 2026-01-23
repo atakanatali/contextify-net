@@ -4,7 +4,7 @@ Contextify is a modular, enterprise-grade .NET framework for the **Model Context
 
 Built upon the official [Anthropic ModelContextProtocol SDK](https://www.nuget.org/packages/ModelContextProtocol), Contextify provides the infrastructure needed for production-ready deployments.
 
-## 📦 Package List
+## Package List
 
 | Area | Package |
 |------|---------|
@@ -15,7 +15,7 @@ Built upon the official [Anthropic ModelContextProtocol SDK](https://www.nuget.o
 | **Config** | `Contextify.Config.AppSettings`, `Contextify.Config.Consul` |
 | **Gateway** | `Contextify.Gateway.Core`, `Contextify.Gateway.Discovery.Consul` |
 
-## 🚀 Basic Usage (HTTP)
+## Basic Usage (HTTP)
 
 1. **Install Packages**
    ```bash
@@ -47,7 +47,7 @@ Built upon the official [Anthropic ModelContextProtocol SDK](https://www.nuget.o
    }
    ```
 
-## 🛡️ Key Features
+## Key Features
 
 - **Deny-by-Default Security**: Full control over which tools are visible to the AI.
 - **Transports**: Native support for HTTP (SSE) and Standard I/O (Stdio).
@@ -55,7 +55,7 @@ Built upon the official [Anthropic ModelContextProtocol SDK](https://www.nuget.o
 - **Gateway Aggregation**: Combine multiple MCP servers into a single hub.
 - **Dynamic Policy**: Change permissions at runtime via Consul.
 
-## 🔗 Documentation & Support
+## Documentation & Support
 
 Full documentation, architecture guides, and examples are available at:
 [https://github.com/atakanatali/contextify-net](https://github.com/atakanatali/contextify-net)

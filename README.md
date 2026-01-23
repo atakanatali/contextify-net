@@ -1,20 +1,36 @@
 # Contextify
 
 <p align="center">
-  <img width="256" height="256" alt="Contextify Logo" src="icon.png" />
+  <img width="456" height="456" alt="Cachify Logo" src="https://github.com/user-attachments/assets/d7c6306b-cf1b-45c1-a58f-492bb3ec304a" />
 </p>
 
-## Modular, Enterprise-Grade .NET Framework for MCP
+<p align="center">
+  <strong>A modular, enterprise-grade .NET framework for Model Context Protocol (MCP) servers</strong>
+</p>
 
-**Contextify** is a high-performance, modular framework built for the **Model Context Protocol (MCP)**. It provides a robust architecture for developing, orchestrating, and securing MCP servers, allowing you to seamlessly expose your application's tools, resources, and prompts to AI assistants like Claude and GPT.
-
-Built on top of the official [Anthropic ModelContextProtocol SDK](https://www.nuget.org/packages/ModelContextProtocol), Contextify adds an enterprise layer including **Deny-by-Default security**, **Gateway aggregation**, and **Dynamic Configuration**.
+<p align="center">
+  <a href="https://github.com/atakanatali/contextify-net/actions/workflows/ci.yml">
+    <img src="https://github.com/atakanatali/contextify-net/actions/workflows/ci.yml/badge.svg" alt="CI" />
+  </a>
+  <a href="https://github.com/atakanatali/contextify-net/releases">
+    <img src="https://img.shields.io/github/v/release/atakanatali/contextify-net?include_prereleases" alt="Release" />
+  </a>
+  <a href="https://www.nuget.org/packages/Contextify.AspNetCore">
+    <img src="https://img.shields.io/nuget/v/Contextify.AspNetCore" alt="NuGet" />
+  </a>
+  <a href="https://www.nuget.org/packages/Contextify.Core">
+    <img src="https://img.shields.io/nuget/dt/Contextify.Core" alt="Downloads" />
+  </a>
+  <a href="https://github.com/atakanatali/contextify-net/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/atakanatali/contextify-net" alt="License" />
+  </a>
+</p>
 
 ---
 
-## 🏗️ Core Architecture
+## Core Architecture
 
-Contextify is designed to be decoupled and extensible.
+Contextify provides a high-level orchestration layer that abstracts the complexities of the Model Context Protocol.
 
 ```mermaid
 graph TB
@@ -36,55 +52,60 @@ graph TB
         SY[System Actions] --> C
     end
 
-    subgraph Config ["Configuration Providers"]
-        AS[AppSettings] -.-> S
-        CS[Consul / Vault] -.-> S
+    subgraph SDK ["Official SDK Bridge"]
+        AD[OfficialAdapter] -.-> |Maps to| MSD[Anthropic SDK Data Models]
     end
 
     CL <==> T
+    C <==> AD
 ```
 
 ---
 
-## 📦 Package Ecosystem
+## Package Deep Dive
 
-Contextify is distributed as a set of focused NuGet packages.
+Contextify is a modular ecosystem. You only install what you need.
 
-### Foundation
-| Package | Description |
-|---------|-------------|
-| [`Contextify.Abstractions`](#) | Common interfaces, DTOs, and the core contract for tools and resources. |
-| [`Contextify.Core`](#) | The engine of the framework. Handles tool discovery, orchestration, and execution logic. |
-| [`Contextify.Mcp.OfficialAdapter`](#) | **The Bridge.** Adapts Contextify's feature-rich model to the official Anthropic MCP SDK. |
+### 1. Foundation & Protocol Bridge
+*   **[`Contextify.Abstractions`](https://www.nuget.org/packages/Contextify.Abstractions)**: Contains the essential contracts. If you want to build a custom tool provider or a new transport, you only need this.
+*   **[`Contextify.Core`](https://www.nuget.org/packages/Contextify.Core)**: The heart of the framework. It manages the **Tool Catalog**, handles the execution lifecycle, and enforces **Security Policies**.
+*   **[`Contextify.Mcp.OfficialAdapter`](https://www.nuget.org/packages/Contextify.Mcp.OfficialAdapter)**: This is a critical component that bridges Contextify's logic with the [official Anthropic `ModelContextProtocol` SDK](https://www.nuget.org/packages/ModelContextProtocol). It translates Contextify's internal tool/resource models into the exact JSON-RPC structures expected by the protocol.
 
-### Transports & Integration
-| Package | Description |
-|---------|-------------|
-| [`Contextify.AspNetCore`](#) | Seamless integration with ASP.NET Core Dependency Injection and Middleware. |
-| [`Contextify.Transport.Http`](#) | Enterprise-ready HTTP/SSE transport for web-based MCP servers. |
-| [`Contextify.Transport.Stdio`](#) | Standard I/O transport for CLI tools and local IDE integrations. |
+### 2. Integration & Hosting
+*   **[`Contextify.AspNetCore`](https://www.nuget.org/packages/Contextify.AspNetCore)**: Provides `AddContextify()` and `MapContextifyMcp()` extensions. It integrates with the standard .NET `ILogger`, `IOptions`, and Dependency Injection.
+*   **[`Contextify.Transport.Http`](https://www.nuget.org/packages/Contextify.Transport.Http)**: Implements **Server-Sent Events (SSE)** for AI clients that communicate over HTTP (like most enterprise web apps).
+*   **[`Contextify.Transport.Stdio`](https://www.nuget.org/packages/Contextify.Transport.Stdio)**: Implements the standard input/output transport, allowing your .NET application to act as a local MCP server for tools like the Claude Desktop app.
 
-### Extensions & Tooling
-| Package | Description |
-|---------|-------------|
-| [`Contextify.OpenApi`](#) | Automatically transforms OpenAPI/Swagger documents into MCP-compatible tools. |
-| [`Contextify.Actions.Defaults`](#) | A collection of ready-to-use system tools (Time, Math, Echo, etc.). |
+### 3. Capability Extensions
+*   **[`Contextify.OpenApi`](https://www.nuget.org/packages/Contextify.OpenApi)**: A powerful engine that parses your existing Swagger/OpenAPI specifications and dynamically generates MCP tools. This allows you to expose existing microservices to AI in seconds.
+*   **[`Contextify.Actions.Defaults`](https://www.nuget.org/packages/Contextify.Actions.Defaults)**: High-performance, native .NET implementations of common tasks (e.g., File I/O, System Info, Math).
 
-### Configuration & Security
-| Package | Description |
-|---------|-------------|
-| [`Contextify.Config.AppSettings`](#) | Static policy management via standard `appsettings.json`. |
-| [`Contextify.Config.Consul`](#) | Dynamic, remote policy provider using HashiCorp Consul. |
+### 4. Configuration & Security
+*   **[`Contextify.Config.AppSettings`](https://www.nuget.org/packages/Contextify.Config.AppSettings)**: The standard way to configure tool whitelists via `appsettings.json`.
+*   **[`Contextify.Config.Consul`](https://www.nuget.org/packages/Contextify.Config.Consul)**: Enables **Dynamic Context**. Change tool permissions in real-time across your entire fleet via Consul without restarting your services.
 
-### Distributed Gateway
-| Package | Description |
-|---------|-------------|
-| [`Contextify.Gateway.Core`](#) | Logic for aggregating multiple MCP backends into a single entry point. |
-| [`Contextify.Gateway.Discovery.Consul`](#) | Auto-discovery for MCP upstreams using Consul. |
+### 5. Multi-Backend Gateway
+*   **[`Contextify.Gateway.Core`](https://www.nuget.org/packages/Contextify.Gateway.Core)**: Core logic for aggregating multiple upstream MCP servers into a single hub.
+*   **[`Contextify.Gateway.Discovery.Consul`](https://www.nuget.org/packages/Contextify.Gateway.Discovery.Consul)**: Automated discovery of MCP servers in a microservices environment via Consul.
 
 ---
 
-## 🚀 Getting Started
+## How It Works: The Protocol Bridge
+
+Contextify doesn't reimplement the protocol from scratch. Instead, it leverages the **Official Anthropic SDK**.
+
+When an AI client (like Claude) sends a `tools/list` request:
+1.  **Transport Layer** (HTTP or Stdio) receives the raw JSON and passes it to the **Dispatcher**.
+2.  **Dispatcher** queries the **Core Orchestrator** for available tools.
+3.  **Core Orchestrator** pulls from all registered providers (OpenAPI, System Actions, etc.) and filters them through the **Security Layer**.
+4.  **OfficialAdapter** takes the whitelisted Contextify tool definitions and converts them into `ModelContextProtocol.Types.Tool` objects.
+5.  The **Anthropic SDK** then handles the final JSON-RPC serialization and returns the compliant response to the client.
+
+This "Best of Both Worlds" approach ensures 100% protocol compliance while offering a rich, .NET-idiomatic developer experience.
+
+---
+
+## Getting Started
 
 ### 1. Build a Web-based MCP Server (HTTP)
 Expose your API to Claude through an HTTP endpoint.
@@ -118,7 +139,7 @@ dotnet add package Contextify.Transport.Stdio
 
 ---
 
-## 🛡️ Security: Deny-by-Default
+## Security: Deny-by-Default
 
 Security is not an afterthought in Contextify. By default, **no tools are exposed**. You must explicitly whitelist tools in your configuration:
 
@@ -138,7 +159,7 @@ Security is not an afterthought in Contextify. By default, **no tools are expose
 
 ---
 
-## 🌐 The Gateway Pattern
+## The Gateway Pattern
 
 When managing dozens of MCP servers, the **Contextify Gateway** allows you to aggregate them into a single, namespaced catalog.
 
@@ -149,7 +170,7 @@ When managing dozens of MCP servers, the **Contextify Gateway** allows you to ag
 
 ---
 
-## 📗 Documentation
+## Documentation
 
 - [Introduction to MCP](https://modelcontextprotocol.io/)
 - [Architecture & Deep Dive](docs/architecture.md)
