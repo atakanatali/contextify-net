@@ -1,92 +1,61 @@
 # Contextify
 
-A modular, enterprise-grade .NET framework for Model Context Protocol (MCP) server and tool management. Expose your application's capabilities to AI assistants through a standardized interface.
+Contextify is a modular, enterprise-grade .NET framework for the **Model Context Protocol (MCP)**. It allows developers to build securely orchestrated MCP servers that expose tools, resources, and prompts to AI assistants.
 
-## Installation
+Built upon the official [Anthropic ModelContextProtocol SDK](https://www.nuget.org/packages/ModelContextProtocol), Contextify provides the infrastructure needed for production-ready deployments.
 
-### For HTTP API (Web API / Microservices)
+## 📦 Package List
 
-```bash
-dotnet add package Contextify.AspNetCore
-dotnet add package Contextify.Transport.Http
-```
+| Area | Package |
+|------|---------|
+| **Core** | `Contextify.Abstractions`, `Contextify.Core`, `Contextify.Mcp.OfficialAdapter` |
+| **Integration** | `Contextify.AspNetCore` |
+| **Transports** | `Contextify.Transport.Http`, `Contextify.Transport.Stdio` |
+| **Tools** | `Contextify.OpenApi`, `Contextify.Actions.Defaults` |
+| **Config** | `Contextify.Config.AppSettings`, `Contextify.Config.Consul` |
+| **Gateway** | `Contextify.Gateway.Core`, `Contextify.Gateway.Discovery.Consul` |
 
-### For STDIO (CLI Tools / Local Development)
+## 🚀 Basic Usage (HTTP)
 
-```bash
-dotnet add package Contextify.AspNetCore
-dotnet add package Contextify.Transport.Stdio
-```
+1. **Install Packages**
+   ```bash
+   dotnet add package Contextify.AspNetCore
+   dotnet add package Contextify.Transport.Http
+   ```
 
-### For Gateway (Multi-Backend Aggregation)
+2. **Configure Services**
+   ```csharp
+   // Program.cs
+   builder.Services.AddContextify()
+       .AddHttpTransport()
+       .AddAppSettingsPolicyProvider();
 
-```bash
-dotnet add package Contextify.Gateway.Core
-dotnet add package Contextify.Gateway.Discovery.Consul
-```
+   var app = builder.Build();
+   app.MapContextifyMcp();
+   app.Run();
+   ```
 
-### Official MCP SDK Support
+3. **Whitelist Tools (Security)**
+   In `appsettings.json`:
+   ```json
+   {
+     "Contextify": {
+       "Security": {
+         "Whitelist": [ { "ToolName": "my-tool:*", "Enabled": true } ]
+       }
+     }
+   }
+   ```
 
-```bash
-dotnet add package Contextify.Mcp.OfficialAdapter
-```
+## 🛡️ Key Features
 
-### Configuration Providers
+- **Deny-by-Default Security**: Full control over which tools are visible to the AI.
+- **Transports**: Native support for HTTP (SSE) and Standard I/O (Stdio).
+- **OpenAPI Integration**: Convert any Swagger/OpenAPI spec to MCP tools instantly.
+- **Gateway Aggregation**: Combine multiple MCP servers into a single hub.
+- **Dynamic Policy**: Change permissions at runtime via Consul.
 
-```bash
-dotnet add package Contextify.Config.AppSettings
-dotnet add package Contextify.Config.Consul
-```
+## 🔗 Documentation & Support
 
-### Additional Features
-
-```bash
-dotnet add package Contextify.OpenApi
-dotnet add package Contextify.Actions.Defaults
-```
-
-## Quick Start
-
-### Program.cs
-
-```csharp
-using Contextify.AspNetCore;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add Contextify with configuration
-builder.Services.AddContextify()
-    .AddHttpTransport()
-    .AddAppSettingsPolicyProvider();
-
-var app = builder.Build();
-
-// Map MCP endpoint
-app.MapContextifyMcp();
-
-app.Run();
-```
-
-### appsettings.json
-
-```json
-{
-  "Contextify": {
-    "Security": {
-      "DefaultPolicy": "Deny",
-      "AllowedTools": ["weather:*", "db:read:*"],
-      "BlockedTools": ["db:delete:*"]
-    }
-  }
-}
-```
-
-## Documentation
-
-- [Full Documentation](https://github.com/atakanatali/contextify-net)
-- [Architecture Guide](https://github.com/atakanatali/contextify-net/blob/main/docs/architecture.md)
-- [Official MCP Specification](https://modelcontextprotocol.io/)
-
-## License
-
-MIT
+Full documentation, architecture guides, and examples are available at:
+[https://github.com/atakanatali/contextify-net](https://github.com/atakanatali/contextify-net)
