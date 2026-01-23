@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Core</RootNamespace>
     <AssemblyName>Contextify.Core</AssemblyName>
+    <Description>Core engine for tool orchestration and execution.</Description>
     <NoWarn>$(NoWarn);CS8933</NoWarn>
   </PropertyGroup>
 

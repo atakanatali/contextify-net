@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Transport.Http</RootNamespace>
     <AssemblyName>Contextify.Transport.Http</AssemblyName>
+    <Description>HTTP (SSE) transport implementation for MCP.</Description>
   </PropertyGroup>
 
   <ItemGroup>

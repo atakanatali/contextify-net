@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Gateway.Core</RootNamespace>
     <AssemblyName>Contextify.Gateway.Core</AssemblyName>
+    <Description>Centralized gateway for aggregating multiple MCP servers.</Description>
   </PropertyGroup>
 
   <ItemGroup>

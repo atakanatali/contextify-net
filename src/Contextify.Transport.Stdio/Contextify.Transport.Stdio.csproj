@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Transport.Stdio</RootNamespace>
     <AssemblyName>Contextify.Transport.Stdio</AssemblyName>
+    <Description>Standard I/O transport implementation for MCP.</Description>
   </PropertyGroup>
 
   <ItemGroup>

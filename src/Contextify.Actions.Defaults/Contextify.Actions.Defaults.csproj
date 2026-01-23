@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.Actions.Defaults</RootNamespace>
     <AssemblyName>Contextify.Actions.Defaults</AssemblyName>
+    <Description>Pre-built system tools and actions for Contextify.</Description>
   </PropertyGroup>
 
   <ItemGroup>

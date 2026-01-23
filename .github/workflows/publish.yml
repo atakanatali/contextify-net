@@ -73,10 +73,20 @@ jobs:
       - name: Push to NuGet
         run: |
           for package in ./nupkgs/*.nupkg; do
-            echo "Publishing: $package"
+            echo "Publishing to NuGet: $package"
             dotnet nuget push "$package" \
               --api-key "${{ secrets.NUGET_API_KEY }}" \
               --source https://api.nuget.org/v3/index.json \
+              --skip-duplicate
+          done
+
+      - name: Push to GitHub Packages
+        run: |
+          for package in ./nupkgs/*.nupkg; do
+            echo "Publishing to GitHub: $package"
+            dotnet nuget push "$package" \
+              --api-key "${{ secrets.GITHUB_TOKEN }}" \
+              --source "https://nuget.pkg.github.com/atakanatali/index.json" \
               --skip-duplicate
           done
 

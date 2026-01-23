@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Description>Common interfaces and models for the Contextify framework.</Description>
   </PropertyGroup>
 
   <ItemGroup>

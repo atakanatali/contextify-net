@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Contextify.OpenApi</RootNamespace>
     <AssemblyName>Contextify.OpenApi</AssemblyName>
+    <Description>OpenAPI/Swagger to MCP tool conversion engine.</Description>
   </PropertyGroup>
 
   <ItemGroup>
